@@ -60,6 +60,13 @@ async function loadData() {
         const resp = await fetch('datos_consolidados.json');
         DATA = await resp.json();
         REGISTROS = DATA.registros;
+
+        // Compute Directo/Indirecto classification
+        REGISTROS.forEach(r => {
+            const formacion = (r.RECIBIO_FORMACION || '').toUpperCase().trim();
+            r.BENEFICIARIO_DIRECTO_INDIRECTO = (formacion === 'SI') ? 'DIRECTO' : 'INDIRECTO';
+        });
+
         FILTERED = [...REGISTROS];
 
         populateFilters();
@@ -91,6 +98,7 @@ function populateFilters() {
     fillSelect('filter-sexo', getUniqueValues('SEXO_AL_NACER'));
     fillSelect('filter-tipo', getUniqueValues('TIPO_DE_BENEFICIARIO'));
     fillSelect('filter-etnia', getUniqueValues('PERTENENCIA_ETNICA'));
+    fillSelect('filter-directo', getUniqueValues('BENEFICIARIO_DIRECTO_INDIRECTO'));
     fillSelect('filter-estrato', getUniqueValues('ESTRATO_SOCIOECONOMICO'));
     fillSelect('filter-edad', getUniqueValues('GRUPO_ETARIO'));
     fillSelect('filter-urbano', getUniqueValues('URBANO_RURAL'));
@@ -119,6 +127,7 @@ function applyFilters() {
         sexo: getSelectedValues('filter-sexo'),
         tipo: getSelectedValues('filter-tipo'),
         etnia: getSelectedValues('filter-etnia'),
+        directo: getSelectedValues('filter-directo'),
         estrato: getSelectedValues('filter-estrato'),
         edad: getSelectedValues('filter-edad'),
         urbano: getSelectedValues('filter-urbano'),
@@ -130,6 +139,7 @@ function applyFilters() {
         if (filters.sexo.length && !filters.sexo.includes(r.SEXO_AL_NACER)) return false;
         if (filters.tipo.length && !filters.tipo.includes(r.TIPO_DE_BENEFICIARIO)) return false;
         if (filters.etnia.length && !filters.etnia.includes(r.PERTENENCIA_ETNICA)) return false;
+        if (filters.directo.length && !filters.directo.includes(r.BENEFICIARIO_DIRECTO_INDIRECTO)) return false;
         if (filters.estrato.length && !filters.estrato.includes(r.ESTRATO_SOCIOECONOMICO)) return false;
         if (filters.edad.length && !filters.edad.includes(r.GRUPO_ETARIO)) return false;
         if (filters.urbano.length && !filters.urbano.includes(r.URBANO_RURAL)) return false;
@@ -141,7 +151,7 @@ function applyFilters() {
 
 function clearFilters() {
     ['filter-org','filter-depto','filter-sexo','filter-tipo',
-     'filter-etnia','filter-estrato','filter-edad','filter-urbano'].forEach(id => {
+     'filter-etnia','filter-directo','filter-estrato','filter-edad','filter-urbano'].forEach(id => {
         const sel = document.getElementById(id);
         [...sel.options].forEach(o => o.selected = false);
     });
@@ -151,7 +161,7 @@ function clearFilters() {
 
 function bindFilterEvents() {
     ['filter-org','filter-depto','filter-sexo','filter-tipo',
-     'filter-etnia','filter-estrato','filter-edad','filter-urbano'].forEach(id => {
+     'filter-etnia','filter-directo','filter-estrato','filter-edad','filter-urbano'].forEach(id => {
         document.getElementById(id).addEventListener('change', applyFilters);
     });
     document.getElementById('btn-clear-filters').addEventListener('click', clearFilters);

@@ -7,10 +7,11 @@
 
 // ─── AUTHORIZED USERS (SHA-256 of "username:password") ─────────
 const AUTHORIZED_HASHES = {
-    'mercy':     '7b0b7e4bc00851d93cc9294e632683fd2189d18e9f5757613b7777cedb6e2d3f',
-    'donatello': 'c43c51c688633b6e1f16b26c466abecabb02418cd631f9646ca29d528a28c7ad',
-    'monica':    'fd177059e99c9230f0b3c37b273fc7fee270556560b2fab0a767f48029f311ed',
-    'yully':     '83d579bdec3fc9643304b0367e879e2cd7aee3a8b041ddf24bfd726ef58551ad'
+    'mercy':         '7b0b7e4bc00851d93cc9294e632683fd2189d18e9f5757613b7777cedb6e2d3f',
+    'donatello':     'c43c51c688633b6e1f16b26c466abecabb02418cd631f9646ca29d528a28c7ad',
+    'monica':        'fd177059e99c9230f0b3c37b273fc7fee270556560b2fab0a767f48029f311ed',
+    'yully':         '83d579bdec3fc9643304b0367e879e2cd7aee3a8b041ddf24bfd726ef58551ad',
+    'felipecotero':  'a8d68a23bc5e552649dcf7b9b0eeec9a974f7ff936a9d0bb4cc4b7c7e050ca38'
 };
 
 // ─── SHA-256 HASH FUNCTION ─────────────────────────────────────
