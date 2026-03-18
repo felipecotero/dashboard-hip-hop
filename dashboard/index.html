@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RED COMUNITARIA DE HIP HOP — Dashboard 2025</title>
+    <meta name="description" content="Tablero de control interactivo de beneficiarios de la Red Comunitaria de Hip Hop Colombia 2025">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Permanent+Marker&family=Rubik+Glitch&family=Russo+One&family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ═══════════ LOGIN SCREEN ═══════════ -->
+    <div id="login-screen">
+        <div class="login-spray login-spray-1"></div>
+        <div class="login-spray login-spray-2"></div>
+        <div class="login-spray login-spray-3"></div>
+        <div class="login-container">
+            <div class="login-title">RED COMUNITARIA<br><span class="accent">DE HIP HOP</span></div>
+            <p class="login-subtitle">ACCESO RESTRINGIDO</p>
+            <form id="login-form" autocomplete="off">
+                <div class="login-field">
+                    <label for="login-user">USUARIO</label>
+                    <input type="text" id="login-user" name="user" placeholder="Ingresa tu usuario" required autocomplete="username">
+                </div>
+                <div class="login-field">
+                    <label for="login-pass">CONTRASEÑA</label>
+                    <input type="password" id="login-pass" name="pass" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+                </div>
+                <div id="login-error" class="login-error"></div>
+                <button type="submit" id="login-btn" class="login-btn">ENTRAR</button>
+            </form>
+            <p class="login-footer-text">Ministerio de las Culturas, las Artes y los Saberes</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ DASHBOARD (hidden until auth) ═══════════ -->
+    <div id="dashboard-content" class="dashboard-hidden">
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header id="main-header">
+        <div class="header-content">
+            <div class="header-spray-left"></div>
+            <div class="header-text">
+                <h1 id="main-title">RED COMUNITARIA<br><span class="accent">DE HIP HOP</span></h1>
+                <p class="subtitle">DASHBOARD DE BENEFICIARIOS — 2025</p>
+                <p class="ministry-tag">Ministerio de las Culturas, las Artes y los Saberes</p>
+            </div>
+            <div class="header-spray-right"></div>
+        </div>
+    </header>
+
+    <!-- ═══════════ STAT CARDS ═══════════ -->
+    <section id="stats-cards" class="section">
+        <div class="cards-grid">
+            <div class="stat-card card-total" id="card-total">
+                <div class="card-icon">🎤</div>
+                <div class="card-number" id="stat-total">—</div>
+                <div class="card-label">BENEFICIARIOS TOTALES</div>
+            </div>
+            <div class="stat-card card-orgs" id="card-orgs">
+                <div class="card-icon">🏠</div>
+                <div class="card-number" id="stat-orgs">—</div>
+                <div class="card-label">ORGANIZACIONES</div>
+            </div>
+            <div class="stat-card card-deptos" id="card-deptos">
+                <div class="card-icon">📍</div>
+                <div class="card-number" id="stat-deptos">—</div>
+                <div class="card-label">DEPARTAMENTOS</div>
+            </div>
+            <div class="stat-card card-hombres" id="card-hombres">
+                <div class="card-icon">♂</div>
+                <div class="card-number" id="stat-hombres">—</div>
+                <div class="card-label">HOMBRES</div>
+            </div>
+            <div class="stat-card card-mujeres" id="card-mujeres">
+                <div class="card-icon">♀</div>
+                <div class="card-number" id="stat-mujeres">—</div>
+                <div class="card-label">MUJERES</div>
+            </div>
+            <div class="stat-card card-urbano" id="card-urbano">
+                <div class="card-icon">🏙️</div>
+                <div class="card-number" id="stat-urbano">—</div>
+                <div class="card-label">URBANO</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ FILTERS ═══════════ -->
+    <section id="filters-section" class="section">
+        <div class="filters-header">
+            <h2 class="section-title">FILTROS</h2>
+            <button id="btn-clear-filters" class="btn-graffiti">LIMPIAR TODO</button>
+        </div>
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label for="filter-org">ORGANIZACIÓN</label>
+                <select id="filter-org" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-depto">DEPARTAMENTO</label>
+                <select id="filter-depto" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-sexo">SEXO AL NACER</label>
+                <select id="filter-sexo" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-tipo">TIPO DE BENEFICIARIO</label>
+                <select id="filter-tipo" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-etnia">PERTENENCIA ÉTNICA</label>
+                <select id="filter-etnia" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-estrato">ESTRATO</label>
+                <select id="filter-estrato" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-edad">GRUPO ETARIO</label>
+                <select id="filter-edad" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-urbano">URBANO / RURAL</label>
+                <select id="filter-urbano" multiple>
+                    <!-- populated by JS -->
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ CHARTS ═══════════ -->
+    <section id="charts-section" class="section">
+        <h2 class="section-title">ESTADÍSTICAS</h2>
+
+        <!-- Row 1: Orgs + Sexo -->
+        <div class="charts-row">
+            <div class="chart-card chart-large" id="chart-card-orgs">
+                <h3 class="chart-title">BENEFICIARIOS POR ORGANIZACIÓN</h3>
+                <div class="chart-wrap"><canvas id="chart-orgs"></canvas></div>
+            </div>
+            <div class="chart-card chart-small" id="chart-card-sexo">
+                <h3 class="chart-title">SEXO AL NACER</h3>
+                <div class="chart-wrap"><canvas id="chart-sexo"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Row 2: Escolaridad + Estrato -->
+        <div class="charts-row">
+            <div class="chart-card chart-medium" id="chart-card-escolaridad">
+                <h3 class="chart-title">NIVEL DE ESCOLARIDAD</h3>
+                <div class="chart-wrap"><canvas id="chart-escolaridad"></canvas></div>
+            </div>
+            <div class="chart-card chart-medium" id="chart-card-estrato">
+                <h3 class="chart-title">ESTRATO SOCIOECONÓMICO</h3>
+                <div class="chart-wrap"><canvas id="chart-estrato"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Row 3: Departamentos + Etnia -->
+        <div class="charts-row">
+            <div class="chart-card chart-large" id="chart-card-deptos">
+                <h3 class="chart-title">DISTRIBUCIÓN POR DEPARTAMENTO</h3>
+                <div class="chart-wrap"><canvas id="chart-deptos"></canvas></div>
+            </div>
+            <div class="chart-card chart-small" id="chart-card-etnia">
+                <h3 class="chart-title">PERTENENCIA ÉTNICA</h3>
+                <div class="chart-wrap"><canvas id="chart-etnia"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Row 4: Edad + Urbano/Rural -->
+        <div class="charts-row">
+            <div class="chart-card chart-medium" id="chart-card-edad">
+                <h3 class="chart-title">GRUPOS ETARIOS</h3>
+                <div class="chart-wrap"><canvas id="chart-edad"></canvas></div>
+            </div>
+            <div class="chart-card chart-medium" id="chart-card-urbano">
+                <h3 class="chart-title">URBANO vs RURAL</h3>
+                <div class="chart-wrap"><canvas id="chart-urbano"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Row 5: Tipo beneficiario + Disciplina -->
+        <div class="charts-row">
+            <div class="chart-card chart-medium" id="chart-card-tipo">
+                <h3 class="chart-title">TIPO DE BENEFICIARIO</h3>
+                <div class="chart-wrap"><canvas id="chart-tipo"></canvas></div>
+            </div>
+            <div class="chart-card chart-medium" id="chart-card-formacion">
+                <h3 class="chart-title">RECIBIÓ FORMACIÓN</h3>
+                <div class="chart-wrap"><canvas id="chart-formacion"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ DATA TABLE ═══════════ -->
+    <section id="table-section" class="section">
+        <h2 class="section-title">DETALLE DE REGISTROS</h2>
+        <div class="table-info">
+            <span id="table-count">— registros</span>
+        </div>
+        <div class="table-wrap">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ORGANIZACIÓN</th>
+                        <th>NOMBRE</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>TIPO BENEF.</th>
+                        <th>SEXO</th>
+                        <th>EDAD</th>
+                        <th>ESCOLARIDAD</th>
+                        <th>ESTRATO</th>
+                        <th>ZONA</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer id="main-footer">
+        <div class="footer-content">
+            <p class="footer-text">RED COMUNITARIA DE HIP HOP — COLOMBIA 2025</p>
+            <p class="footer-sub">Ministerio de las Culturas, las Artes y los Saberes</p>
+        </div>
+    </footer>
+
+    </div><!-- end #dashboard-content -->
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.Python
+
+# Excel source data (sensitive - do NOT push)
+red_comunitaria_de_hip_hop/
+*.xlsx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Python script (not needed for deployment)
+leer_bases_hiphop.py
