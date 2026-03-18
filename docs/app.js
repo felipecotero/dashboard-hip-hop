@@ -53,6 +53,14 @@ Chart.defaults.plugins.tooltip.padding = 12;
 // ─── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
+
+    // Bind logout button
+    const logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (typeof logout === 'function') logout();
+        });
+    }
 });
 
 async function loadData() {
@@ -62,9 +70,19 @@ async function loadData() {
         REGISTROS = DATA.registros;
 
         // Compute Directo/Indirecto classification
+        // Directo = received formation (participated directly in activities)
+        // Indirecto = received payment but no formation (staff/contractors)
+        //             or did not participate in formation
         REGISTROS.forEach(r => {
             const formacion = (r.RECIBIO_FORMACION || '').toUpperCase().trim();
-            r.BENEFICIARIO_DIRECTO_INDIRECTO = (formacion === 'SI') ? 'DIRECTO' : 'INDIRECTO';
+            const pago = (r.RECIBIO_PAGO || '').toUpperCase().trim();
+            if (formacion === 'SI') {
+                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'DIRECTO';
+            } else if (pago === 'SI') {
+                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'INDIRECTO';
+            } else {
+                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'DIRECTO';
+            }
         });
 
         FILTERED = [...REGISTROS];

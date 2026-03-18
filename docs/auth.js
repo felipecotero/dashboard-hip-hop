@@ -49,7 +49,7 @@ function showDashboard() {
 async function handleLogin(e) {
     e.preventDefault();
 
-    const username = document.getElementById('login-user').value.trim().toLowerCase();
+    const username = document.getElementById('login-user').value.trim().toLowerCase().replace(/\s+/g, '');
     const password = document.getElementById('login-pass').value;
     const errorEl = document.getElementById('login-error');
     const btn = document.getElementById('login-btn');
@@ -122,4 +122,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-pass').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleLogin(e);
     });
+
+    // Toggle password visibility
+    document.getElementById('toggle-pass').addEventListener('click', () => {
+        const passInput = document.getElementById('login-pass');
+        const btn = document.getElementById('toggle-pass');
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            btn.textContent = '🙈';
+            btn.title = 'Ocultar contraseña';
+        } else {
+            passInput.type = 'password';
+            btn.textContent = '👁';
+            btn.title = 'Ver contraseña';
+        }
+    });
 });
+
+// ─── LOGOUT ────────────────────────────────────────────────────
+function logout() {
+    sessionStorage.removeItem('hiphop_auth');
+    sessionStorage.removeItem('hiphop_user');
+    location.reload();
+}
