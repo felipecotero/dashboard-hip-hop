@@ -70,19 +70,11 @@ async function loadData() {
         REGISTROS = DATA.registros;
 
         // Compute Directo/Indirecto classification
-        // Directo = received formation (participated directly in activities)
-        // Indirecto = received payment but no formation (staff/contractors)
-        //             or did not participate in formation
+        // Directo = recibe pago (profes, logística, administrativos)
+        // Indirecto = no recibe pago pero recibe beneficios del proyecto (participantes)
         REGISTROS.forEach(r => {
-            const formacion = (r.RECIBIO_FORMACION || '').toUpperCase().trim();
             const pago = (r.RECIBIO_PAGO || '').toUpperCase().trim();
-            if (formacion === 'SI') {
-                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'DIRECTO';
-            } else if (pago === 'SI') {
-                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'INDIRECTO';
-            } else {
-                r.BENEFICIARIO_DIRECTO_INDIRECTO = 'DIRECTO';
-            }
+            r.BENEFICIARIO_DIRECTO_INDIRECTO = (pago === 'SI') ? 'DIRECTO' : 'INDIRECTO';
         });
 
         FILTERED = [...REGISTROS];
